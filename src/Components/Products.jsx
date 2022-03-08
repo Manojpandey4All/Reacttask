@@ -7,10 +7,6 @@ import { Success } from './Success'
 import { Failure } from './Failure'
 export const Products = () => {
     // const [data,setData] = useState([])
-    const fail = useSelector((state) => state.allProducts.filterFailProducts)
-    const success = useSelector((state) => state.allProducts.filterSuccessProducts)
-    console.log({ fail })
-    console.log({ success })
     const [search, setSearchItems] = useState("")
     const [loading, setLoading] = useState(false)
     const products = useSelector((state) => state.allProducts)
@@ -31,20 +27,7 @@ export const Products = () => {
         getProducts();
     }, [])
 
-    const failureProStatus = (cat) => {
-        const updateList = products.payload.filter((items) => {
-            return items.launch_success === false
-        }
-        )
-        dispatch(setFailureStatus(updateList))
-    }
-    const successProStatus = (cat) => {
-        const updateList = products.payload.filter((items) => {
-            return items.launch_success === true
-        }
-        )
-        dispatch(setSuccessStatus(updateList))
-    }
+    
     const upcomingFlight = () => {
         const updateList = products.filter((items) => {
             return items.upcoming === false
@@ -82,16 +65,26 @@ export const Products = () => {
         <>
             <div className='hero '>
                 <div className='container'>
-                    <h4>Launch Status</h4>
                     <hr />
                     <div className="buttons d-flex justify-content-center">
-
-                        <button className='btn btn-danger me-2' onClick={failureProStatus}>Failure</button>
-                        <button className='btn btn-success me-2' onClick={successProStatus}>Success</button>
                         <button className='btn btn-primary me-2' onClick={upcomingFlight}>Upcoming</button>
                         <button className='btn btn-secondary me-2' onClick={lastYear}>Last Year</button>
                         <button className='btn btn-secondary me-2' onClick={lastWeek}>Last Week</button>
                     </div>
+
+                    <div className='row'>
+                        <div className='col-lg-5'>
+                        <Failure/>
+                        </div>
+
+                        <div className='col-lg-7'>
+                        <Success/>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    
                     <br />
                     <input type="search"
                         className='form-control'
@@ -100,13 +93,13 @@ export const Products = () => {
                     />
                     <br />
                     <div className='row  justify-content-center'>
-                        <Failure check={fail}/>
+                        {/* <Failure check={fail}/> */}
                         {loading ? (
                             <Spinner animation="border" role="status">
                                 {/* <span className="">Loading...</span> */}
                             </Spinner>
                         ) : (
-
+                        
                             products.payload?.filter((value) => {
                                 if (search === "") {
                                     return value
@@ -117,7 +110,7 @@ export const Products = () => {
                                 ?.map((items) => {
                                     return (
                                         <>
-                                            <div className="col-lg-8" >
+                                            <div className="col-lg-7" >
                                                 <div className="card" style={{ marginBottom: "20px" }}>
                                                     <div className="card-body" key={items.flight_number} >
                                                         <h3 className="card-title">{`RocketName : ${items.rocket.rocket_name}`}</h3>
@@ -128,14 +121,10 @@ export const Products = () => {
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </>
                                     )
                                 })
-
                         )}
-
-
                     </div>
                 </div>
 

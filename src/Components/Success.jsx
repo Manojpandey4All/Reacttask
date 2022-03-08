@@ -1,11 +1,28 @@
 /* eslint-disable */
-import React from 'react'
-
+import React,{useState} from 'react'
+import { setSuccessStatus } from "../redux/actions/productsActions"
+import { useDispatch, useSelector } from "react-redux"
 export const  Success = (props) => {
+    const [hideAddDepartment, setHideAddDepartment] = useState(true)
+    const dispatch = useDispatch()
+    const success = useSelector((state) => state.allProducts.filterSuccessProducts)
+    const products = useSelector((state) => state.allProducts)
+    const successProStatus = (cat) => {
+        const updateList = products.payload?.filter((items) => {
+            return items.launch_success === true
+        }
+        )
+        dispatch(setSuccessStatus(updateList))
+    }
   return (
     <>
+    <button className='btn btn-success me-2' onClick={() => {
+                setHideAddDepartment(!hideAddDepartment)
+                successProStatus()
+
+            }}>Success</button>
         <div className='row'>
-        {props?.pass?.map((items)=>{
+        {hideAddDepartment ?( success?.map((items)=>{
             return(
                 <>
                     <div className="col-lg-8" >
@@ -21,7 +38,7 @@ export const  Success = (props) => {
                                             </div>
                 </>
             )
-        })}
+        })): null}
 </div>
     </>
   )

@@ -67,42 +67,41 @@ export const Products = () => {
     <>
       <div className="hero ">
         <div className="container">
-          <hr />
-          <div className="buttons d-flex justify-content-center">
-            {/* <button className='btn btn-primary me-2' onClick={()=>setSearchItems()}>successs</button> */}
-            <button className="btn btn-primary me-2" onClick={upcomingFlight}>
+          <div className="row">
+             <div className="buttons col-md-2">
+            <button className="btn btn-primary me-2" onClick={upcomingFlight} style={{margin:'10px'}}>
               Upcoming
             </button>
-            <button className="btn btn-secondary me-2" onClick={lastYear}>
+            <button className="btn btn-secondary me-2" onClick={lastYear} style={{margin:'10px'}}>
               Last Year
             </button>
-            <button className="btn btn-secondary me-2" onClick={lastWeek}>
+            <button className="btn btn-secondary me-2" onClick={lastWeek} style={{margin:'10px'}}>
               Last Week
             </button>
           </div>
+            <div className="col col-md-10" style={{marginTop:'20px'}}>
 
-          <br />
-          <input
-            type="search"
-            className="form-control"
-            placeholder="Search by Rocket Name"
-            onChange={(e) => setSearchItems(e.target.value)}
-          />
-          <br />
+            <input   type="search" className="form-control"  placeholder="Search by Rocket Name" 
+            onChange={(e) => setSearchItems(e.target.value)}/>
+
+          {/* Components */}
           <div className="row">
-            <div className="col-lg-5">
+            <div className="col col-md-6" style={{marginTop:'10px'}}>
               <Failure />
             </div>
 
-            <div className="col-lg-7">
+            <div className="col col-md-6" style={{marginTop:'10px'}}>
               <Success />
-            </div>
+            
           </div>
-          <div className="row  justify-content-center">
+          </div>
+            
+{/* close here */}
+<div className="row  justify-content-center">
             {/* <Failure check={fail}/> */}
             {loading ? (
               <Spinner animation="border" role="status">
-                <span className="">Loading...</span>
+                
               </Spinner>
             ) : (
               products.payload
@@ -120,15 +119,15 @@ export const Products = () => {
                 ?.map((items) => {
                   return (
                     <>
-                      <div className="col-lg-7">
+                      <div className="col-md-11">
                         <div className="card" style={{ marginBottom: "20px" }}>
                           <div className="card-body" key={items.flight_number}>
-                            <h3 className="card-title">{`RocketName : ${items.rocket.rocket_name}`}</h3>
+                            <h6 className="card-title">{`RocketName : ${items.rocket.rocket_name}`}</h6>
                             <p className="card-text">{`Mission Name : ${items.mission_name}`}</p>
-                            <h4 className="card-text">{`Launch Year : ${items.launch_year}`}</h4>
-                            <h4 className="card-text">
-                              <p>{`Details: ${items.details}`}</p>
-                            </h4>
+                            <h5 className="card-text">{`Launch Year : ${items.launch_year}`}</h5>
+                           
+                              <p className="card-text">{`Details: ${items.details}`}</p>
+                           
                             <p>{`Launch Date : ${new Date(
                               items.launch_date_unix
                             ).toLocaleDateString()}`}</p>
@@ -140,6 +139,17 @@ export const Products = () => {
                 })
             )}
           </div>
+            </div>
+
+            
+
+          </div>
+         
+
+          
+          
+         
+        
         </div>
       </div>
     </>

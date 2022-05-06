@@ -1,9 +1,4 @@
 import { ActionTypes } from "../constants/action-types";
-const intialState = {
-  products: [],
-  filterFailProducts: [],
-  filterSuccessProducts: [],
-};
 
 export const productsReducer = (state = [], { type, payload }) => {
   console.log({ payload });
